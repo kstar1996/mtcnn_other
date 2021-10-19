@@ -1,0 +1,93 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
+
+mtcnn
+*pnet.txt
+*.out
+/build
+/.cache
+/.vscode
+/.idea
+.zip
+inputValue.txt
+result_pe0_conv0_quant_v2.txt
+weightValue.txt
+resource/biasValue.txt
+resource/imageText.txt
+resource/inputValue.txt
+resource/testImage.txt
+resource/weightValue.txt
+resource/sw_weight/sram4 copy.coe
+result_pe0_conv0_quant_211007.txt
+pnet_conv4_biasValue.txt
+pnet_conv4_weightValue.txt
+
+# Project exclude paths
+/cmake-build-debug/
