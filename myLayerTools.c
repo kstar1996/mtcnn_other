@@ -781,17 +781,18 @@ int16_t **fprintHexmyPrelu(int16_t **featureBuffer, int width, int height, int8_
 int16_t **myMaxPooling(int16_t **featureBuffer, int width, int height, int kernelSize, int stride, int outChannels, int paddingSize) {
     int16_t **swapBuffer = (int16_t **) malloc(outChannels * sizeof(int16_t *));
     if (paddingSize != 0) {
-        for (int i = 0; i < outChannels; i++) {
+        for(int i = 0; i < outChannels; i++){
             swapBuffer[i] = (int16_t *) malloc((width + paddingSize) * (width + paddingSize) * sizeof(int16_t));
-            memcpy(swapBuffer[i], featureBuffer[i], ((width + paddingSize) * (width + paddingSize) * sizeof(int16_t)));
-            swapBuffer[i][(width + paddingSize) * (width + paddingSize) - 1] = 0;
-        }
-        for (int i = 0; i < (width + paddingSize) * (width + paddingSize); i++) {
-            swapBuffer[(width + paddingSize) - 1][i] = 0;
+            memset(swapBuffer[i], 0, (width + paddingSize) * (width + paddingSize) * sizeof(int16_t));
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < width; k++){
+                    swapBuffer[i][(j * width) + (j * paddingSize) + k] = featureBuffer[i][(j * width) + k];
+                }
+            }
         }
     } else {
         for (int i = 0; i < outChannels; i++) {
-            swapBuffer[i] = (int16_t *) malloc((width + paddingSize) * (width + paddingSize) * sizeof(int16_t));
+            swapBuffer[i] = (int16_t *) malloc(height * width * sizeof(int16_t));
             memcpy(swapBuffer[i], featureBuffer[i], (height * width * sizeof(int16_t)));
         }
     }
@@ -838,13 +839,19 @@ int16_t **myMaxPooling(int16_t **featureBuffer, int width, int height, int kerne
 int16_t **fprintDecmyMaxPooling(int16_t **featureBuffer, int width, int height, int kernelSize, int stride, int outChannels, int paddingSize, FILE *inputfp) {
     int16_t **swapBuffer = (int16_t **) malloc(outChannels * sizeof(int16_t *));
     if (paddingSize != 0) {
-        for (int i = 0; i < outChannels; i++) {
+        for(int i = 0; i < outChannels; i++){
             swapBuffer[i] = (int16_t *) malloc((width + paddingSize) * (width + paddingSize) * sizeof(int16_t));
-            memcpy(swapBuffer[i], featureBuffer[i], ((width + paddingSize) * (width + paddingSize) * sizeof(int16_t)));
-            swapBuffer[i][(width + paddingSize) * (width + paddingSize) - 1] = 0;
-        }
-        for (int i = 0; i < (width + paddingSize) * (width + paddingSize); i++) {
-            swapBuffer[(width + paddingSize) - 1][i] = 0;
+            // memset(swapBuffer[i], 0, (width + paddingSize) * (width + paddingSize) * sizeof(int16_t));
+            for(int j = 0; j < height; j++){
+                // memcpy(&swapBuffer[i][j * (width + paddingSize)], &featureBuffer[i][j * width], 9 * sizeof(int16_t));
+                for(int k = 0; k < width; k++){
+                    swapBuffer[i][(j * (width + paddingSize)) + k] = featureBuffer[i][(j * width) + k];
+                }
+                swapBuffer[i][(j * (width + paddingSize)) + 9] = 0;
+            }
+            for(int j = 0; j < width+paddingSize; j++){
+                swapBuffer[i][(height * (width + paddingSize)) + j] = 0;
+            }
         }
     } else {
         for (int i = 0; i < outChannels; i++) {
@@ -869,16 +876,17 @@ int16_t **fprintDecmyMaxPooling(int16_t **featureBuffer, int width, int height, 
                 mpCount = 0;
                 for (int a = 0; a < kernelSize; a++) {
                     for (int b = 0; b < kernelSize; b++) {
-                        temp = swapBuffer[i][b + (k * stride) + (j * stride * (width + paddingSize)) +
-                                             (a * (width + paddingSize))];
-                        fprintf(inputfp, "%d\n", temp);
+                        temp = swapBuffer[i][(j * stride * (width + paddingSize)) + (k * stride) +
+                                             (a * (width + paddingSize)) + b];
+                        fprintf(inputfp, "%d: %d\n", (j * stride * (width + paddingSize)) + (k * stride) +
+                                                     (a * (width + paddingSize)) + b, temp);
                         if (temp > max) {
                             max = temp;
                         }
                         mpCount++;
                     }
                 }
-                resultBuffer[i][k + (j * mpOutSize)] = max;
+                resultBuffer[i][(j * mpOutSize) + k] = max;
                 kCount++;
                 fprintf(inputfp, "MAX: %d\n\n", max);
             }
@@ -1071,7 +1079,7 @@ int16_t ** BoundingBoxCheck(int16_t **arr, int width, int height) {
     int new_x, new_y, new_w, new_h;
 
     for(int i=0; i<arr[0][7]; i++) {
-        printf("%d\n", i);
+//        printf("%d\n", i);
         new_x = arr[i][2];
         new_y = arr[i][3];
         new_w = arr[i][4];

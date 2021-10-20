@@ -339,12 +339,12 @@ int16_t **myPnet(WeightValue *weightValue, uint8_t ****imageBuffer, int input_wi
                 pNetResults[j_input_offset + (i_input_offset * max_width)][6] = j_input_offset + (i_input_offset * max_width);
                 pNetResults[j_input_offset + (i_input_offset * max_width)][7] = max_width * max_height;
 
-                // print each layer output
-//                printPnet(fp, width, height, Rbuffer, Gbuffer, Bbuffer, weightValue,
-//                          rgbResultBuffer, bias1Result, act1Result, mp1Result,
-//                          conv2ResultBuffer, bias2Result, act2Result,
-//                          conv3ResultBuffer, bias3Result, act3Result,
-//                          conv4ResultBuffer, bias4Result, conv5ResultBuffer, bias5Result);
+//                 print each layer output
+                printPnet(fp, width, height, Rbuffer, Gbuffer, Bbuffer, weightValue,
+                          rgbResultBuffer, bias1Result, act1Result, mp1Result,
+                          conv2ResultBuffer, bias2Result, act2Result,
+                          conv3ResultBuffer, bias3Result, act3Result,
+                          conv4ResultBuffer, bias4Result, conv5ResultBuffer, bias5Result);
 
                 // memory Free!!
                 freePnet(Rbuffer, Gbuffer, Bbuffer, weightValue,
@@ -426,29 +426,29 @@ int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pN
         free(s1);
     }
     for(int input_index=0; input_index<96; input_index++){
-        int x_base_address = pNetResults[input_index][2];
-        int y_base_address = pNetResults[input_index][3];
-        if(x_base_address+width < input_width-1 && y_base_address+height < input_height-1 && x_base_address>=0 && y_base_address>=0){
+        int x_base = pNetResults[input_index][2];
+        int y_base = pNetResults[input_index][3];
+        if(x_base + width < input_width - 1 && y_base + height < input_height - 1 && x_base >= 0 && y_base >= 0){
 //     for(int i_input_offset = 0; i_input_offset < max_height; i_input_offset++){
 //         for(int j_input_offset = 0; j_input_offset < max_width; j_input_offset++){
             int16_t *Rbuffer = (int16_t *) malloc(width * height * sizeof(int16_t));
             for (int i = 0; i < 24; i++) {
                 for (int j = 0; j < 24; j++) {
-                    Rbuffer[j + (i * width)] = imageBuffer[0][0][i+y_base_address][j+x_base_address];
+                    Rbuffer[j + (i * width)] = imageBuffer[0][0][i + y_base][j + x_base];
                 }
             }
 
             int16_t *Gbuffer = (int16_t *) malloc(width * height * sizeof(int16_t));
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    Gbuffer[j + (i * width)] = imageBuffer[0][1][i+y_base_address][j+x_base_address];
+                    Gbuffer[j + (i * width)] = imageBuffer[0][1][i + y_base][j + x_base];
                 }
             }
 
             int16_t *Bbuffer = (int16_t *) malloc(width * height * sizeof(int16_t));
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    Bbuffer[j + (i * width)] = imageBuffer[0][2][i+y_base_address][j+x_base_address];
+                    Bbuffer[j + (i * width)] = imageBuffer[0][2][i + y_base][j + x_base];
                 }
             }
             filterSize = 3;
@@ -504,8 +504,8 @@ int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pN
             // int16_t **act2Result = fprintDecmyPrelu(bias2Result, 9, 9, weightValue->rnetWeightValue->act2, weightValue->rnetWeightValue->filterOutChannels2, act2Shift, weightfp, inputfp);
             // int16_t **act2Result = fprintHexmyPrelu(bias2Result, 9, 9, weightValue->rnetWeightValue->act2, weightValue->rnetWeightValue->filterOutChannels2, act2Shift, weightfp, inputfp);
 
-            int16_t **mp2Result = myMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1);
-            // int16_t **mp2Result = fprintDecmyMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1, inputfp);
+//            int16_t **mp2Result = myMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1);
+             int16_t **mp2Result = fprintDecmyMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1, inputfp);
             //conv2, input=feature shape(11*11), channels 28 output=feature shape(9*9), channel 48
             filterSize = 3;
             stride = 1;
@@ -666,8 +666,22 @@ int main() {
         pNetResultsFinal[i + 64] = pNetResultsHalf[i];
     }
 
-    int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
-    time_t endTime = time(NULL);
+    for (int all=0;all<96; all++){
+        if (pNetResultsFinal[all][3]<0){
+            pNetResultsFinal[all] = 0;
+        }
+        if (pNetResultsFinal[all][4]<0){
+            pNetResultsFinal[all] = 0;
+        }
+    }
+//
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<96; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
+//    }
+
+//    int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
+//    time_t endTime = time(NULL);
 
     // freeSystemMemory(sramBuffer, weightBuffer, imageBuffer, pNetResultsFinal, rNetResults);
 

@@ -292,13 +292,13 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     // fprintf(fp, "After bias1 =========================================================\n");
     width = 10;
     height = 10;
-    // printAfterBias(fp, bias1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
+//    printAfterBias(fp, bias1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
     // printDecAfterBias(fp, bias1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
 
     // fprintf(fp, "After act1 =========================================================\n");
     width = 10;
     height = 10;
-    // printAfterAct(fp, act1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
+//    printAfterAct(fp, act1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
     // printDecAfterAct(fp, act1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width);
 
     // fprintf(fp, "After mp1 =========================================================\n");
@@ -307,7 +307,7 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     int kernelSize = 2;
     stride = 2;
     int paddingSize = 0;
-    // printAfterMp(fp, mp1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
+//    printAfterMp(fp, mp1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
     // printDecAfterMp(fp, mp1Result, weightValue->pnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
 
 
@@ -323,13 +323,13 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     // fprintf(fp, "After bias2 =========================================================\n");
     width = 3;
     height = 3;
-    // printAfterBias(fp, bias2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
+//    printAfterBias(fp, bias2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
     // printDecAfterBias(fp, bias2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
 
     // fprintf(fp, "After act2 =========================================================\n");
     width = 3;
     height = 3;
-    // printAfterAct(fp, act2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
+//    printAfterAct(fp, act2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
     // printDecAfterAct(fp, act2Result, weightValue->pnetWeightValue->filterOutChannels2, height, width);
 
 
@@ -345,13 +345,13 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     // fprintf(fp, "After bias3 =========================================================\n");
     width = 1;
     height = 1;
-    // printAfterBias(fp, bias3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
+//    printAfterBias(fp, bias3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
     // printDecAfterBias(fp, bias3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
 
     // fprintf(fp, "After act3 =========================================================\n");
     width = 1;
     height = 1;
-    // printAfterAct(fp, act3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
+//    printAfterAct(fp, act3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
     // printDecAfterAct(fp, act3Result, weightValue->pnetWeightValue->filterOutChannels3, height, width);
 
 
@@ -359,13 +359,13 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 1;
     stride = 1;
     padding = 0;
-    // printAfter11Conv(fp, conv4ResultBuffer, weightValue->pnetWeightValue->filterOutChannels3, weightValue->pnetWeightValue->filterOutChannels4, stride, padding, filterSize);
+//    printAfter11Conv(fp, conv4ResultBuffer, weightValue->pnetWeightValue->filterOutChannels3, weightValue->pnetWeightValue->filterOutChannels4, stride, padding, filterSize);
     // printDecAfter11Conv(fp, conv4ResultBuffer, weightValue->pnetWeightValue->filterOutChannels3, weightValue->pnetWeightValue->filterOutChannels4, stride, padding, filterSize);
 
     // fprintf(fp, "After bias4 =========================================================\n");
 //    fprintf(fp[16], "00000000");
-//    width = 1;
-//    height = 1;
+    width = 1;
+    height = 1;
 //    printAfter11Bias(fp, bias4Result, weightValue->pnetWeightValue->filterOutChannels4, height, width);
     // printDecAfter11Bias(fp, bias4Result, weightValue->pnetWeightValue->filterOutChannels4, height, width);
 
@@ -374,12 +374,12 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 1;
     stride = 1;
     padding = 0;
-    // printAfter11Conv(fp, conv5ResultBuffer, weightValue->pnetWeightValue->filterOutChannels4, weightValue->pnetWeightValue->filterOutChannels5, stride, padding, filterSize);
+//    printAfter11Conv(fp, conv5ResultBuffer, weightValue->pnetWeightValue->filterOutChannels4, weightValue->pnetWeightValue->filterOutChannels5, stride, padding, filterSize);
     // printDecAfter11Conv(fp, conv5ResultBuffer, weightValue->pnetWeightValue->filterOutChannels4, weightValue->pnetWeightValue->filterOutChannels5, stride, padding, filterSize);
 
     // fprintf(fp, "After bias5 =========================================================\n");
-//    width = 1;
-//    height = 1;
+    width = 1;
+    height = 1;
 //    printAfter11Bias(fp, bias5Result, weightValue->pnetWeightValue->filterOutChannels5, height, width);
     // printDecAfter11Bias(fp, bias5Result, weightValue->pnetWeightValue->filterOutChannels5, height, width);
 //    fprintf(fp[16], "\n");
@@ -404,23 +404,22 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     int padding = 0;
     int filterSize = 3;
     // int mpPadding = 0;
-    //changed
-    width = 22;
-    height = 22;
+    width = 24;
+    height = 24;
 //    printAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
-//     printDecAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
+    // printDecAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias1 =========================================================\n");
     width = 22;
     height = 22;
 //    printAfterBias(fp, bias1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
-//     printDecAfterBias(fp, bias1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
+    // printDecAfterBias(fp, bias1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
 
     // fprintf(fp, "After act1 =========================================================\n");
     width = 22;
     height = 22;
 //    printAfterAct(fp, act1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
-//     printDecAfterAct(fp, act1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
+    // printDecAfterAct(fp, act1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width);
 
     // fprintf(fp, "After mp1 =========================================================\n");
     width = 22;
@@ -429,7 +428,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     stride = 2;
     int paddingSize = 0;
 //    printAfterMp(fp, mp1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
-//     printDecAfterMp(fp, mp1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
+    // printDecAfterMp(fp, mp1Result, weightValue->rnetWeightValue->filterOutChannels1, height, width, kernelSize, stride, paddingSize);
 
 
     // fprintf(fp, "After conv2 =========================================================\n");
@@ -438,28 +437,29 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 3;
     width = 11;
     height = 11;
-    // printAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
+//    printAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
     // printDecAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias2 =========================================================\n");
     width = 9;
     height = 9;
-    // printAfterBias(fp, bias2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
+//    printAfterBias(fp, bias2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
     // printDecAfterBias(fp, bias2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
 
     // fprintf(fp, "After act2 =========================================================\n");
     width = 9;
     height = 9;
-    // printAfterAct(fp, act2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
+//    printAfterAct(fp, act2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
     // printDecAfterAct(fp, act2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width);
 
+//    printInput(fp, mp2Result, height, width);
     // fprintf(fp, "After mp2 =========================================================\n");
     width = 9;
     height = 9;
     kernelSize = 2;
     stride = 2;
     paddingSize = 1;
-     printAfterMp(fp, mp2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width, kernelSize, stride, paddingSize);
+//    printAfterMp(fp, mp2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width, kernelSize, stride, paddingSize);
     // printDecAfterMp(fp, mp2Result, weightValue->rnetWeightValue->filterOutChannels2, height, width, kernelSize, stride, paddingSize);
 
 
@@ -469,28 +469,28 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 3;
     width = 5;
     height = 5;
-    // printAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
+//    printAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
     // printDecAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias3 =========================================================\n");
     width = 3;
     height = 3;
-    // printAfterBias(fp, bias3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
+//    printAfterBias(fp, bias3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
     // printDecAfterBias(fp, bias3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
 
     // fprintf(fp, "After act3 =========================================================\n");
     width = 3;
     height = 3;
-    // printAfterAct(fp, act3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
+//    printAfterAct(fp, act3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
     // printDecAfterAct(fp, act3Result, weightValue->rnetWeightValue->filterOutChannels3, height, width);
 
 
     // fprintf(fp, "After fc1 =========================================================\n");
-    // printAfterFc(fp, fc1Result, weightValue->rnetWeightValue->fcOutChannels1);
+//    printAfterFc(fp, fc1Result, weightValue->rnetWeightValue->fcOutChannels1);
     // printDecAfterFc(fp, fc1Result, weightValue->rnetWeightValue->fcOutChannels1);
 
     // fprintf(fp, "After bias4 =========================================================\n");
-    // printAfterFcBias(fp, bias4Result, weightValue->rnetWeightValue->fcOutChannels1);
+//    printAfterFcBias(fp, bias4Result, weightValue->rnetWeightValue->fcOutChannels1);
     // printDecAfterFcBias(fp, bias4Result, weightValue->rnetWeightValue->fcOutChannels1);
 
 
@@ -502,7 +502,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
 
 
     // fprintf(fp, "After fc2 =========================================================\n");
-    // printAfterFc(fp, fc2Result, weightValue->rnetWeightValue->fcOutChannels2);
+//    printAfterFc(fp, fc2Result, weightValue->rnetWeightValue->fcOutChannels2);
     // printDecAfterFc(fp, fc2Result, weightValue->rnetWeightValue->fcOutChannels2);
 
     // fprintf(fp, "After bias5 =========================================================\n");
@@ -512,7 +512,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
 
 
     // fprintf(fp, "After fc3 =========================================================\n");
-    // printAfterFc(fp, fc3Result, weightValue->rnetWeightValue->fcOutChannels3);
+//    printAfterFc(fp, fc3Result, weightValue->rnetWeightValue->fcOutChannels3);
     // printDecAfterFc(fp, fc3Result, weightValue->rnetWeightValue->fcOutChannels3);
 
     // fprintf(fp, "After bias6 =========================================================\n");
