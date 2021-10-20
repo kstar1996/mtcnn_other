@@ -89,14 +89,14 @@ uint8_t ***loadImageHalf(char *filePath, int width, int height, int channels) {
                     for (int h = 0; h < 72; h++) {
                         int temp;
                         fscanf(fp, "%d", &temp);
-                        printf("temp :  %d\n",temp);
+//                        printf("temp :  %d\n",temp);
                         cnt+=1;
                     }
                 }
                 fscanf(fp, "%d", &temp1);
                 fscanf(fp, "%d", &temp2);
-                printf("temp1 :  %d\n",temp1);
-                printf("temp2 :  %d\n",temp2);
+//                printf("temp1 :  %d\n",temp1);
+//                printf("temp2 :  %d\n",temp2);
                 imageBuffer[i][j][k] = (uint8_t) temp1;
             }
         }
