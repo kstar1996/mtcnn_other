@@ -638,47 +638,52 @@ int main() {
     uint8_t ****imageBufferHalf = loadMyImageHalf(imagePath);
 
     time_t startTime = time(NULL);
-    int16_t **pNetResults = myPnet(weightBuffer, imageBuffer, 72, 144);
+//    int16_t **pNetResults = myPnet(weightBuffer, imageBuffer, 72, 144);
     int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
-    int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
+//    int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
+////
+//    ChangeCoordinatePnet(pNetResults, 1);
+//    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
+//    ChangeCoordinatePnet(pNetResultsHalf, 12);
+
+//    pNetResults = BoundingBoxCheck(pNetResults, image_width, image_height);
+//    quickSortDesc(pNetResults, 0, pNetResults[0][7] - 1);
 //
-    ChangeCoordinatePnet(pNetResults);
-    ChangeCoordinatePnet(pNetResultsTwoThird);
-    ChangeCoordinatePnet(pNetResultsHalf);
-
-    pNetResults = BoundingBoxCheck(pNetResults, image_width, image_height);
-    quickSortDesc(pNetResults, 0, pNetResults[0][7] - 1);
-
-    pNetResultsTwoThird = BoundingBoxCheck(pNetResultsTwoThird, image_width, image_height);
-    quickSortDesc(pNetResultsTwoThird, 0, pNetResultsTwoThird[0][7] - 1);
-
-    pNetResultsHalf = BoundingBoxCheck(pNetResultsHalf, image_width, image_height);
-    quickSortDesc(pNetResultsHalf, 0, pNetResultsHalf[0][7] - 1);
-
-    pNetResults = ReturnPnetTop32(pNetResults);
-    pNetResultsTwoThird = ReturnPnetTop32(pNetResultsTwoThird);
-    pNetResultsHalf = ReturnPnetTop32(pNetResultsHalf);
-
-    int16_t **pNetResultsFinal = (int16_t **)malloc(96 * sizeof(int16_t *));
-    for(int i=0; i<32; i++){
-        pNetResultsFinal[i] = pNetResults[i];
-        pNetResultsFinal[i + 32] = pNetResultsTwoThird[i];
-        pNetResultsFinal[i + 64] = pNetResultsHalf[i];
-    }
-
-    for (int all=0;all<96; all++){
-        if (pNetResultsFinal[all][5]<0){
-            pNetResultsFinal[all][5] = 0;
-        }
-        if (pNetResultsFinal[all][4]<0){
-            pNetResultsFinal[all][4] = 0;
-        }
-    }
-
-    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
-    for(int i=0; i<96; i++){
-        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
-    }
+//    pNetResultsTwoThird = BoundingBoxCheck(pNetResultsTwoThird, image_width, image_height);
+//    quickSortDesc(pNetResultsTwoThird, 0, pNetResultsTwoThird[0][7] - 1);
+//
+//    pNetResultsHalf = BoundingBoxCheck(pNetResultsHalf, image_width, image_height);
+//    quickSortDesc(pNetResultsHalf, 0, pNetResultsHalf[0][7] - 1);
+//
+//    pNetResults = ReturnPnetTop32(pNetResults);
+//    pNetResultsTwoThird = ReturnPnetTop32(pNetResultsTwoThird);
+//    pNetResultsHalf = ReturnPnetTop32(pNetResultsHalf);
+//
+//    int16_t **pNetResultsFinal = (int16_t **)malloc(96 * sizeof(int16_t *));
+//    for(int i=0; i<32; i++){
+//        pNetResultsFinal[i] = pNetResults[i];
+//        pNetResultsFinal[i + 32] = pNetResultsTwoThird[i];
+//        pNetResultsFinal[i + 64] = pNetResultsHalf[i];
+//    }
+//
+//    for (int all=0;all<96; all++){
+//        pNetResultsFinal[all][5] = 0;
+//        pNetResultsFinal[all][4] = 0;
+//    }
+//
+//    for (int all=0;all<96; all++){
+//        if (pNetResultsFinal[all][2]<0 || pNetResultsFinal[all][3]<0){
+//            pNetResultsFinal[all][2] = 0;
+//            pNetResultsFinal[all][3] = 0;
+//            pNetResultsFinal[all][0] = 0;
+//            pNetResultsFinal[all][1] = 0;
+//        }
+//    }
+//
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<96; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
+//    }
 
 //    int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
 //    time_t endTime = time(NULL);

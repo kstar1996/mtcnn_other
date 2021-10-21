@@ -126,30 +126,33 @@ void OverflowCheck32(int32_t *value){
 }
 
 void quickSortDesc(int16_t **arr, int left, int right) {
-    int L = left, R = right;
+    int Left = left, Right = right;
     int16_t ***temp;
     int pivot = arr[(left + right) / 2][1];
 
-    while (L <= R) {
-        if (arr[L][1] > pivot)
-            L++;
-        if (arr[R][1] < pivot)
-            R--;
+    while (Left <= Right) {
+        while (arr[Left][1] > pivot) {
+            Left++;
+        }
+        while (arr[Right][1] < pivot) {
+            Right--;
+        }
 
-        if (L <= R) {
-            if (L != R) {
-                temp = arr[L];
-                arr[L] = arr[R];
-                arr[R] = temp;
+        if (Left <= Right) {
+            if (Left != Right) {
+                temp = arr[Left];
+                arr[Left] = arr[Right];
+                arr[Right] = temp;
             }
-            L++; R--;
+            Left++; Right--;
         }
     }
-
-    if (left < R)
-        quickSortDesc(arr, left, R);
-    if (L < right)
-        quickSortDesc(arr, L, right);
+    if (left < Right) {
+        quickSortDesc(arr, left, Right);
+    }
+    if (Left < right) {
+        quickSortDesc(arr, Left, right);
+    }
 }
 
 
@@ -990,23 +993,32 @@ void ****freeMyLayerResult(int16_t ****pNetResults, int16_t ****rNetResults) {
 
 
 //eujin functions
+// 0: face exists
+// 1: is face
+// 2: x
+// 3: y
+// 4: width
+// 5: height
+// 6: 12x12 patch index
 
-void ChangeCoordinatePnet(int16_t **arr){
+void ChangeCoordinatePnet(int16_t **arr, int type){
     float scale;
     int x_win, y_win;
     int max_index = arr[0][7];
     for(int i=0; i<max_index; i++){
-        if(max_index>2000) {
+        // original
+        if(type == 1) {
             scale = 1.0;
             x_win = arr[i][6] % 31 * 2;
             y_win = (int)(arr[i][6] / 31) * 2;
         }
-        else if(max_index>500){
+        // two third
+        else if(type == 23){
             scale = 2.0/3.0;
             x_win = arr[i][6] % 19 * 2;
             y_win = (int)(arr[i][6] / 19) * 2;
-        }
-        else{
+        }// one half
+        else if(type == 12){
             scale = 1.0/2.0;
             x_win = arr[i][6] % 13 * 2;
             y_win = (int)(arr[i][6] / 13) * 2;
@@ -1015,8 +1027,25 @@ void ChangeCoordinatePnet(int16_t **arr){
         arr[i][3] = (y_win + arr[i][3] * 12) / scale;
         arr[i][4] = arr[i][4] * 12 / scale;
         arr[i][5] = arr[i][5] * 12 / scale;
+
+        arr[i][2] *= 12;
+        arr[i][3] *= 12;
+        arr[i][4] *= 12;
+        arr[i][5] *= 12;
+
+        arr[i][2] = arr[i][2]>>15;
+        arr[i][3] = arr[i][3]>>15;
+        arr[i][4] = arr[i][4]>>15;
+        arr[i][5] = arr[i][5]>>15;
+
+//        printf("%d, %d, %d, %d, %d, %d index: %d\n", arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5], arr[i][6]);
     }
 }
+
+
+
+
+
 
 void ChangeCoordinateRnet(int16_t **rNet, int16_t **pNet){
     float scale;

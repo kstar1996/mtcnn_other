@@ -275,7 +275,7 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
                int16_t ***conv3ResultBuffer, int16_t **bias3Result, int16_t **act3Result,
                int64_t ***conv4ResultBuffer, int16_t **bias4Result, int64_t ***conv5ResultBuffer, int16_t **bias5Result){
     // fprintf(fp, "Raw image ========================================================\n");
-    // printInput(fp, Rbuffer, height, width);
+//     printInput(fp, Rbuffer, height, width);
 
     // printInput(fp, Gbuffer, height, width);
 
@@ -392,7 +392,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
                int16_t **fc1Result, int16_t **bias4Result, int16_t **act4Result,
                int16_t **fc2Result, int16_t **bias5Result, int16_t **fc3Result, int16_t **bias6Result){
     // fprintf(fp, "Raw image ========================================================\n");
-    // printInput(fp, Rbuffer, height, width);
+     printInput(fp, Rbuffer, height, width);
 
     // printInput(fp, Gbuffer, height, width);
 

@@ -96,7 +96,6 @@ void SortDesc(int16_t **arr, int left, int right);
 
 int16_t **FilterBBox(int16_t **pNetResults, int width, int height);
 
-void ChangeCoordinatePnet(int16_t **arr);
 
 void SortDesc(int16_t **arr, int left, int right);
 
@@ -119,7 +118,7 @@ void ThresholdCheck(int16_t **pNetResults, int thres);
 
 void ChangeCoordinateRnet(int16_t **rNet, int16_t **pNet);
 
-void ChangeCoordinatePnet(int16_t **arr);
+void ChangeCoordinatePnet(int16_t **arr, int type);
 
 int16_t **FilterBBox(int16_t **pNetResults, int width, int height);
 
