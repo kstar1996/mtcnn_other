@@ -633,16 +633,16 @@ int main() {
     insertValueInWeightBuffer(sramBuffer, weightBuffer);
 
     char *imagePath = "../resource/testImage/";
-//    uint8_t ****imageBuffer = loadMyImage(imagePath);
-//    uint8_t ****imageBufferTwoThird = loadMyImageTwoThird(imagePath);
+    uint8_t ****imageBuffer = loadMyImage(imagePath);
+    uint8_t ****imageBufferTwoThird = loadMyImageTwoThird(imagePath);
     uint8_t ****imageBufferHalf = loadMyImageHalf(imagePath);
 
     time_t startTime = time(NULL);
-//    int16_t **pNetResults = myPnet(weightBuffer, imageBuffer, 72, 144);
-//    int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
+    int16_t **pNetResults = myPnet(weightBuffer, imageBuffer, 72, 144);
+    int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
     int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
-////
-//    ChangeCoordinatePnet(pNetResults, 1);
+
+    //    ChangeCoordinatePnet(pNetResults, 1);
 //    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
 //    ChangeCoordinatePnet(pNetResultsHalf, 12);
 

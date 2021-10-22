@@ -1037,14 +1037,9 @@ void ChangeCoordinatePnet(int16_t **arr, int type){
         arr[i][3] = arr[i][3]>>15;
         arr[i][4] = arr[i][4]>>15;
         arr[i][5] = arr[i][5]>>15;
-
 //        printf("%d, %d, %d, %d, %d, %d index: %d\n", arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5], arr[i][6]);
     }
 }
-
-
-
-
 
 
 void ChangeCoordinateRnet(int16_t **rNet, int16_t **pNet){
