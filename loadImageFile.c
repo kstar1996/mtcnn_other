@@ -247,44 +247,76 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
             cnt = 0;
             inc = 0;
             for (int k = 0; k < width; k++) {
-                if (cnt == 0){
-                    for (int h = 0; h < 72; h++) {
-                        int temp3;
-                        fscanf(fp, "%d", &temp3);
-                        printf("temp3 :  %d\n",temp3);
-                        cnt += 1;
+                if (j%2==0) {
+                    if (cnt == 0) {
+                        for (int h = 0; h < 72; h++) {
+                            int temp3;
+                            fscanf(fp, "%d", &temp3);
+                            printf("temp3 :  %d\n", temp3);
+                            cnt += 1;
+                        }
                     }
-                }
-                // we keep temp and temp1
-                if (inc%2==0){
-                    int temp;
-                    fscanf(fp, "%d", &temp);
-                    printf("temp :  %d\n",temp);
-                    fprintf(fpw,"%d ",temp);
-                    all +=1;
-                    if(all==9){
-                        all = 0;
-                        fprintf(fpw, "\n");
+                    // we keep temp and temp1
+                    if (inc % 2 == 0) {
+                        int temp;
+                        fscanf(fp, "%d", &temp);
+                        printf("temp :  %d\n", temp);
+                        fprintf(fpw, "%d ", temp);
+                        all += 1;
+                        if (all == 9) {
+                            all = 0;
+                            fprintf(fpw, "\n");
+                        }
+                        imageBuffer[i][j][k] = (uint8_t) temp;
+                        inc += 1;
+                    } else {
+                        int temp1;
+                        int temp2;
+                        fscanf(fp, "%d", &temp1);
+                        fscanf(fp, "%d", &temp2);
+                        printf("temp1 :  %d\n", temp1);
+                        fprintf(fpw, "%d ", temp1);
+                        all += 1;
+                        if (all == 9) {
+                            all = 0;
+                            fprintf(fpw, "\n");
+                        }
+
+                        printf("temp2 :  %d\n", temp2);
+                        imageBuffer[i][j][k] = (uint8_t) temp1;
+                        inc += 1;
                     }
-                    imageBuffer[i][j][k] = (uint8_t) temp;
-                    inc += 1;
                 }
                 else{
-                    int temp1;
-                    int temp2;
-                    fscanf(fp, "%d", &temp1);
-                    fscanf(fp, "%d", &temp2);
-                    printf("temp1 :  %d\n",temp1);
-                    fprintf(fpw,"%d ",temp1);
-                    all+=1;
-                    if(all==9){
-                        all = 0;
-                        fprintf(fpw, "\n");
-                    }
+                    if (inc % 2 == 0) {
+                        int temp4;
+                        fscanf(fp, "%d", &temp4);
+                        printf("temp4 :  %d\n", temp4);
+                        fprintf(fpw, "%d ", temp4);
+                        all += 1;
+                        if (all == 9) {
+                            all = 0;
+                            fprintf(fpw, "\n");
+                        }
+                        imageBuffer[i][j][k] = (uint8_t) temp4;
+                        inc += 1;
+                    } else {
+                        int temp5;
+                        int temp6;
+                        fscanf(fp, "%d", &temp5);
+                        fscanf(fp, "%d", &temp6);
+                        printf("temp5 :  %d\n", temp5);
+                        fprintf(fpw, "%d ", temp5);
+                        all += 1;
+                        if (all == 9) {
+                            all = 0;
+                            fprintf(fpw, "\n");
+                        }
 
-                    printf("temp2 :  %d\n",temp2);
-                    imageBuffer[i][j][k] = (uint8_t) temp1;
-                    inc += 1;
+                        printf("temp6 :  %d\n", temp6);
+                        imageBuffer[i][j][k] = (uint8_t) temp5;
+                        inc += 1;
+                    }
                 }
             }
         }

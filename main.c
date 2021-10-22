@@ -456,15 +456,15 @@ int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pN
             padding = 0;
             mpPadding = 0;
             int16_t **rResult = my3x3Convolution(weightValue->rnetWeightValue->conv1R, Rbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift);
-            // int16_t **rResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1R, Rbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
+//             int16_t **rResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1R, Rbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
             // int16_t **rResult = fprintHexmy3x3Convolution(weightValue->rnetWeightValue->conv1R, Rbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
 
             int16_t **gResult = my3x3Convolution(weightValue->rnetWeightValue->conv1G, Gbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift);
-            // int16_t **gResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1G, Gbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
+//             int16_t **gResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1G, Gbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
             // int16_t **gResult = fprintHexmy3x3Convolution(weightValue->rnetWeightValue->conv1G, Gbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
 
             int16_t **bResult = my3x3Convolution(weightValue->rnetWeightValue->conv1B, Bbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift);
-            // int16_t **bResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1B, Bbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
+//             int16_t **bResult = fprintDecmy3x3Convolution(weightValue->rnetWeightValue->conv1B, Bbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
             // int16_t **bResult = fprintHexmy3x3Convolution(weightValue->rnetWeightValue->conv1B, Bbuffer, 24, 24, filterSize, stride, padding, weightValue->rnetWeightValue->filterOutChannels1, 0, conv1Shift, weightfp, inputfp);
 
             int16_t ***rgbResultBuffer = (int16_t ***) malloc(3 * sizeof(int16_t **));
@@ -633,14 +633,14 @@ int main() {
     insertValueInWeightBuffer(sramBuffer, weightBuffer);
 
     char *imagePath = "../resource/testImage/";
-    uint8_t ****imageBuffer = loadMyImage(imagePath);
-    uint8_t ****imageBufferTwoThird = loadMyImageTwoThird(imagePath);
+//    uint8_t ****imageBuffer = loadMyImage(imagePath);
+//    uint8_t ****imageBufferTwoThird = loadMyImageTwoThird(imagePath);
     uint8_t ****imageBufferHalf = loadMyImageHalf(imagePath);
 
     time_t startTime = time(NULL);
 //    int16_t **pNetResults = myPnet(weightBuffer, imageBuffer, 72, 144);
-    int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
-//    int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
+//    int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
+    int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
 ////
 //    ChangeCoordinatePnet(pNetResults, 1);
 //    ChangeCoordinatePnet(pNetResultsTwoThird, 23);

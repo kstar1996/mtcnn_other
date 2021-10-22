@@ -277,9 +277,9 @@ void printPnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     // fprintf(fp, "Raw image ========================================================\n");
 //     printInput(fp, Rbuffer, height, width);
 
-    // printInput(fp, Gbuffer, height, width);
+//     printInput(fp, Gbuffer, height, width);
 
-    // printInput(fp, Bbuffer, height, width);
+//     printInput(fp, Bbuffer, height, width);
 
 
     // fprintf(fp, "After conv1 =========================================================\n");
