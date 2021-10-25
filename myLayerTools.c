@@ -47,6 +47,13 @@ int16_t **ReturnPnetTop32(int16_t **pNetResults){
     return pNetResultsFinal;
 }
 
+void ReturnWidthHeightZero(int16_t **pNetResults){
+    for (int all=0;all<pNetResults[0][7]; all++){
+        pNetResults[all][5] = 0;
+        pNetResults[all][4] = 0;
+    }
+}
+
 int16_t latestChangeBit64(int64_t *num, int shift){
     // 64 bit with sign bit , full num
     int64_t beta1 = (*num >> shift);
@@ -1005,7 +1012,7 @@ void ChangeCoordinatePnet(int16_t **arr, int type){
 
     int32_t x_state, y_state, w_state, h_state;
 
-    printf("<<<<<<<<<<<<AFTER PNET NORMALIZATION>>>>>>>>>>>>\n");
+//    printf("<<<<<<<<<<<<AFTER PNET NORMALIZATION>>>>>>>>>>>>\n");
     for(int i=0; i<max_index; i++){
 
         x_signbit = (arr[i][2] >> 15) & 1 ;
@@ -1018,54 +1025,11 @@ void ChangeCoordinatePnet(int16_t **arr, int type){
         w_state = (arr[i][4] & 32767) * 12;
         h_state = (arr[i][5] & 32767) * 12;
 
-//        arr[i][2] = (x_state>>15) + (x_signbit*32768);
-//        arr[i][3] = (y_state>>15) + (y_signbit*32768);
-//        arr[i][4] = (w_state>>15) + (w_signbit*32768);
-//        arr[i][5] = (h_state>>15) + (h_signbit*32768);
+        arr[i][2] = (x_state>>15) + (x_signbit*32768);
+        arr[i][3] = (y_state>>15) + (y_signbit*32768);
+        arr[i][4] = (w_state>>15) + (w_signbit*32768);
+        arr[i][5] = (h_state>>15) + (h_signbit*32768);
 
-        if (x_signbit == 0){
-            arr[i][2] = (x_state>>15);
-        }
-        else{
-            arr[i][2] = (x_state>>15) * -1;
-        }
-
-        if (y_signbit == 0){
-            arr[i][3] = (y_state>>15);
-        }
-        else{
-            arr[i][3] = (y_state>>15)* -1;
-        }
-
-        if (y_signbit == 0){
-            arr[i][4] = (w_state>>15);
-        }
-        else{
-            arr[i][4] = (w_state>>15) * -1;
-        }
-
-        if (y_signbit == 0){
-            arr[i][5] = (h_state>>15);
-        }
-        else{
-            arr[i][5] = (h_state>>15) * -1;
-        }
-
-        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5],arr[i][6]);
-
-
-//        arr[i][2] *= 12;
-//        arr[i][3] *= 12;
-//        arr[i][4] *= 12;
-//        arr[i][5] *= 12;
-
-//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5],arr[i][6]);
-
-
-//        arr[i][2] = arr[i][2]>>15;
-//        arr[i][3] = arr[i][3]>>15;
-//        arr[i][4] = arr[i][4]>>15;
-//        arr[i][5] = arr[i][5]>>15;
 
 //        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5],arr[i][6]);
 
@@ -1157,20 +1121,21 @@ int16_t ** BoundingBoxCheck(int16_t **arr, int width, int height) {
     int16_t **results = (int16_t **)malloc(sizeof (int16_t *) * arr[0][7]);
     int new_x, new_y, new_w, new_h;
 
+
     for(int i=0; i<arr[0][7]; i++) {
 //        printf("%d\n", i);
         new_x = arr[i][2];
         new_y = arr[i][3];
         new_w = arr[i][4];
         new_h = arr[i][5];
-        // (new_x+new_w)>width || (new_y+new_h)>height || new_w<=0 ||new_h<=0
-        if (new_x<0 || new_x>width || new_y<0 || new_y>height) {
+        // (new_x+new_w)>width || (new_y+new_h)>height || new_w<=0 ||new_h<=0 || new_x>width ||new_y>height
+        if (new_x<0 || new_y<0 ) {
            results[i] = (int16_t *)malloc(sizeof(int16_t) * 8);
             results[i][7]=arr[0][7];
             results[i][0]=0;
             results[i][1]=0;
-            results[i][2]=arr[i][2];
-            results[i][3]=arr[i][3];
+            results[i][2]=0;
+            results[i][3]=0;
             results[i][4]=arr[i][4];
             results[i][5]=arr[i][5];
             results[i][6]=arr[i][6];

@@ -330,7 +330,7 @@ int16_t **myPnet(WeightValue *weightValue, uint8_t ****imageBuffer, int input_wi
 
                 int16_t **bias5Result = my11Bias(conv5ResultBuffer, 1, 1, weightValue->pnetWeightValue->bias5, weightValue->pnetWeightValue->filterOutChannels3, weightValue->pnetWeightValue->filterOutChannels5, conv5_shift, bias5_shift);
 
-                pNetResults[j_input_offset + (i_input_offset * max_width)] = (int16_t *)malloc(8 * sizeof(int16_t));\
+                pNetResults[j_input_offset + (i_input_offset * max_width)] = (int16_t *)malloc(8 * sizeof(int16_t));
                 pNetResults[j_input_offset + (i_input_offset * max_width)][0] = bias4Result[0][0];
                 pNetResults[j_input_offset + (i_input_offset * max_width)][1] = bias4Result[1][0];
                 pNetResults[j_input_offset + (i_input_offset * max_width)][2] = bias5Result[0][0];
@@ -490,8 +490,8 @@ int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pN
             // int16_t **act2Result = fprintDecmyPrelu(bias2Result, 9, 9, weightValue->rnetWeightValue->act2, weightValue->rnetWeightValue->filterOutChannels2, act2Shift, weightfp, inputfp);
             // int16_t **act2Result = fprintHexmyPrelu(bias2Result, 9, 9, weightValue->rnetWeightValue->act2, weightValue->rnetWeightValue->filterOutChannels2, act2Shift, weightfp, inputfp);
 
-//            int16_t **mp2Result = myMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1);
-             int16_t **mp2Result = fprintDecmyMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1, inputfp);
+            int16_t **mp2Result = myMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1);
+//             int16_t **mp2Result = fprintDecmyMaxPooling(act2Result, 9, 9, 2, 2, weightValue->rnetWeightValue->filterOutChannels2, 1, inputfp);
             //conv2, input=feature shape(11*11), channels 28 output=feature shape(9*9), channel 48
             filterSize = 3;
             stride = 1;
@@ -558,7 +558,6 @@ int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pN
             rNetResults[input_index][5] = bias6Result[3][0];
             rNetResults[input_index][6] = pNetResults[input_index][6];
             rNetResults[input_index][7] = pNetResults[input_index][7];
-
 
             // print layer output
             printRnet(fp, width, height, Rbuffer, Gbuffer, Bbuffer, weightValue,
@@ -628,25 +627,11 @@ int main() {
     int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
     int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
 
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
-//    for(int i=0; i<2077; i++){
-//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
-//    }
-
-    ChangeCoordinatePnet(pNetResults, 1);
-    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
-    ChangeCoordinatePnet(pNetResultsHalf, 12);
-
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
-//    for(int i=0; i<2077; i++){
-//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
-//    }
-
     ThresholdCheck(pNetResults, 0);
     ThresholdCheck(pNetResultsTwoThird, 0);
     ThresholdCheck(pNetResultsHalf, 0);
 
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    printf("<<<<<<<<<<<<THRESHOLD CHECK RESULTS>>>>>>>>>>>>\n");
 //    for(int i=0; i<2077; i++){
 //        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
@@ -655,7 +640,25 @@ int main() {
     pNetResultsTwoThird = BoundingBoxCheck(pNetResultsTwoThird, image_width, image_height);
     pNetResultsHalf = BoundingBoxCheck(pNetResultsHalf, image_width, image_height);
 
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    printf("<<<<<<<<<<<<BBOX CHECK RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
+//    }
+
+    ReturnWidthHeightZero(pNetResults);
+    ReturnWidthHeightZero(pNetResultsTwoThird);
+    ReturnWidthHeightZero(pNetResultsHalf);
+
+//    printf("<<<<<<<<<<<<WH ZERO RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
+//    }
+
+    ChangeCoordinatePnet(pNetResults, 1);
+    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
+    ChangeCoordinatePnet(pNetResultsHalf, 12);
+
+//    printf("<<<<<<<<<<<<CHANGE COORD RESULTS>>>>>>>>>>>>\n");
 //    for(int i=0; i<2077; i++){
 //        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
@@ -664,7 +667,7 @@ int main() {
     quickSortDesc(pNetResultsTwoThird, 0, pNetResultsTwoThird[0][7] - 1);
     quickSortDesc(pNetResultsHalf, 0, pNetResultsHalf[0][7] - 1);
 
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    printf("<<<<<<<<<<<<SORTING RESULTS>>>>>>>>>>>>\n");
 //    for(int i=0; i<2077; i++){
 //        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
@@ -673,6 +676,7 @@ int main() {
     pNetResultsTwoThird = ReturnPnetTop32(pNetResultsTwoThird);
     pNetResultsHalf = ReturnPnetTop32(pNetResultsHalf);
 
+
     int16_t **pNetResultsFinal = (int16_t **)malloc(96 * sizeof(int16_t *));
     for(int i=0; i<32; i++){
         pNetResultsFinal[i] = pNetResults[i];
@@ -680,26 +684,12 @@ int main() {
         pNetResultsFinal[i + 64] = pNetResultsHalf[i];
     }
 
-    for (int all=0;all<96; all++){
-        pNetResultsFinal[all][5] = 0;
-        pNetResultsFinal[all][4] = 0;
+    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+    for(int i=0; i<96; i++){
+        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
     }
 
-    for (int all=0;all<96; all++){
-        if (pNetResultsFinal[all][2]<0 || pNetResultsFinal[all][3]<0){
-            pNetResultsFinal[all][2] = 0;
-            pNetResultsFinal[all][3] = 0;
-            pNetResultsFinal[all][0] = 0;
-            pNetResultsFinal[all][1] = 0;
-        }
-    }
-
-//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
-//    for(int i=0; i<96; i++){
-//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
-//    }
-
-//    int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
+    int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
 //    time_t endTime = time(NULL);
 
     // freeSystemMemory(sramBuffer, weightBuffer, imageBuffer, pNetResultsFinal, rNetResults);

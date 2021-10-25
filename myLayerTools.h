@@ -116,6 +116,8 @@ int16_t **Threshold(int16_t **arr, int thres, int width, int height);
 
 void ThresholdCheck(int16_t **pNetResults, int thres);
 
+void ReturnWidthHeightZero(int16_t **pNetResults);
+
 void ChangeCoordinateRnet(int16_t **rNet, int16_t **pNet);
 
 void ChangeCoordinatePnet(int16_t **arr, int type);
