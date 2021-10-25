@@ -1014,7 +1014,6 @@ void ChangeCoordinatePnet(int16_t **arr, int type){
 
 //    printf("<<<<<<<<<<<<AFTER PNET NORMALIZATION>>>>>>>>>>>>\n");
     for(int i=0; i<max_index; i++){
-
         x_signbit = (arr[i][2] >> 15) & 1 ;
         y_signbit = (arr[i][3] >> 15) & 1 ;
         w_signbit = (arr[i][4] >> 15) & 1 ;
@@ -1051,10 +1050,14 @@ void ChangeCoordinatePnet(int16_t **arr, int type){
             y_win = (int)(arr[i][6] / 13) * 2;
         }
 
-        arr[i][2] = (x_win + arr[i][2] * 12) / scale;
-        arr[i][3] = (y_win + arr[i][3] * 12) / scale;
-        arr[i][4] = arr[i][4] * 12 / scale;
-        arr[i][5] = arr[i][5] * 12 / scale;
+//        arr[i][2] = (x_win + arr[i][2] * 12) / scale;
+//        arr[i][3] = (y_win + arr[i][3] * 12) / scale;
+//        arr[i][4] = arr[i][4] * 12 / scale;
+//        arr[i][5] = arr[i][5] * 12 / scale;
+        arr[i][2] = (x_win + arr[i][2]) / scale;
+        arr[i][3] = (y_win + arr[i][3]) / scale;
+        arr[i][4] = arr[i][4] / scale;
+        arr[i][5] = arr[i][5] / scale;
 
 //        printf("%d, %d, %d, %d, %d, %d index: %d\n", arr[i][0], arr[i][1], arr[i][2], arr[i][3], arr[i][4], arr[i][5], arr[i][6]);
     }

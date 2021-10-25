@@ -684,10 +684,16 @@ int main() {
         pNetResultsFinal[i + 64] = pNetResultsHalf[i];
     }
 
+//    printf("<<<<<<<<<<<<PNET RESULTS DEC>>>>>>>>>>>>\n");
+//    for(int i=0; i<96; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
+//    }
+
     printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
     for(int i=0; i<96; i++){
-        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
+        printf("%d-> Score: %04x, %04x\t X, Y: %02x, %02x\tW, H: %02x, %02x\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
     }
+
 
     int16_t **rNetResults = myRnet(weightBuffer, imageBuffer, pNetResultsFinal, 72, 144);
 //    time_t endTime = time(NULL);

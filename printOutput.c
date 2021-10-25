@@ -406,7 +406,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     // int mpPadding = 0;
     width = 24;
     height = 24;
-//    printAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
+    printAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
     // printDecAfterConv(fp, rgbResultBuffer, 3, weightValue->rnetWeightValue->filterOutChannels1, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias1 =========================================================\n");
@@ -437,7 +437,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 3;
     width = 11;
     height = 11;
-//    printAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
+    printAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
     // printDecAfterConv(fp, conv2ResultBuffer, weightValue->rnetWeightValue->filterOutChannels1, weightValue->rnetWeightValue->filterOutChannels2, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias2 =========================================================\n");
@@ -469,7 +469,7 @@ void printRnet(FILE **fp, int width, int height, int16_t *Rbuffer, int16_t *Gbuf
     filterSize = 3;
     width = 5;
     height = 5;
-//    printAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
+    printAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
     // printDecAfterConv(fp, conv3ResultBuffer, weightValue->rnetWeightValue->filterOutChannels2, weightValue->rnetWeightValue->filterOutChannels3, height, width, stride, padding, filterSize);
 
     // fprintf(fp, "After bias3 =========================================================\n");
