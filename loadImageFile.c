@@ -252,7 +252,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                         for (int h = 0; h < 72; h++) {
                             int temp3;
                             fscanf(fp, "%d", &temp3);
-                            printf("temp3 :  %d\n", temp3);
+//                            printf("temp3 :  %d\n", temp3);
                             cnt += 1;
                         }
                     }
@@ -260,7 +260,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                     if (inc % 2 == 0) {
                         int temp;
                         fscanf(fp, "%d", &temp);
-                        printf("temp :  %d\n", temp);
+//                        printf("temp :  %d\n", temp);
                         fprintf(fpw, "%d ", temp);
                         all += 1;
                         if (all == 9) {
@@ -274,7 +274,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                         int temp2;
                         fscanf(fp, "%d", &temp1);
                         fscanf(fp, "%d", &temp2);
-                        printf("temp1 :  %d\n", temp1);
+//                        printf("temp1 :  %d\n", temp1);
                         fprintf(fpw, "%d ", temp1);
                         all += 1;
                         if (all == 9) {
@@ -282,7 +282,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                             fprintf(fpw, "\n");
                         }
 
-                        printf("temp2 :  %d\n", temp2);
+//                        printf("temp2 :  %d\n", temp2);
                         imageBuffer[i][j][k] = (uint8_t) temp1;
                         inc += 1;
                     }
@@ -291,7 +291,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                     if (inc % 2 == 0) {
                         int temp4;
                         fscanf(fp, "%d", &temp4);
-                        printf("temp4 :  %d\n", temp4);
+//                        printf("temp4 :  %d\n", temp4);
                         fprintf(fpw, "%d ", temp4);
                         all += 1;
                         if (all == 9) {
@@ -305,7 +305,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                         int temp6;
                         fscanf(fp, "%d", &temp5);
                         fscanf(fp, "%d", &temp6);
-                        printf("temp5 :  %d\n", temp5);
+//                        printf("temp5 :  %d\n", temp5);
                         fprintf(fpw, "%d ", temp5);
                         all += 1;
                         if (all == 9) {
@@ -313,7 +313,7 @@ uint8_t ***loadImageTwoThird(char *filePath, int width, int height, int channels
                             fprintf(fpw, "\n");
                         }
 
-                        printf("temp6 :  %d\n", temp6);
+//                        printf("temp6 :  %d\n", temp6);
                         imageBuffer[i][j][k] = (uint8_t) temp5;
                         inc += 1;
                     }

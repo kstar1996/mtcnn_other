@@ -330,8 +330,9 @@ int16_t **myPnet(WeightValue *weightValue, uint8_t ****imageBuffer, int input_wi
 
                 int16_t **bias5Result = my11Bias(conv5ResultBuffer, 1, 1, weightValue->pnetWeightValue->bias5, weightValue->pnetWeightValue->filterOutChannels3, weightValue->pnetWeightValue->filterOutChannels5, conv5_shift, bias5_shift);
 
+                pNetResults[j_input_offset + (i_input_offset * max_width)] = (int16_t *)malloc(8 * sizeof(int16_t));\
                 pNetResults[j_input_offset + (i_input_offset * max_width)][0] = bias4Result[0][0];
-                pNetResults[j_input_offset + (i_input_offset * max_width)][1] = bias4Result[0][1];
+                pNetResults[j_input_offset + (i_input_offset * max_width)][1] = bias4Result[1][0];
                 pNetResults[j_input_offset + (i_input_offset * max_width)][2] = bias5Result[0][0];
                 pNetResults[j_input_offset + (i_input_offset * max_width)][3] = bias5Result[1][0];
                 pNetResults[j_input_offset + (i_input_offset * max_width)][4] = bias5Result[2][0];
@@ -365,21 +366,6 @@ int16_t **myPnet(WeightValue *weightValue, uint8_t ****imageBuffer, int input_wi
 //    fclose(inputfp);
 
     return pNetResults;
-}
-
-int16_t **Threshold(int16_t **arr, int thres, int max_width, int max_height) {
-    int16_t **finalResults = (int16_t **) malloc(max_width * max_height * sizeof(int16_t *));
-
-    int16_t face_score;
-    int incr = 0;
-    for(int i=0; i<arr[0][7]; i++) {
-        face_score = arr[i][1];
-        if (face_score>=thres){
-            finalResults[incr] = arr[i];
-            incr+=1;
-        }
-    }
-    return finalResults;
 }
 
 int16_t **myRnet(WeightValue *weightValue, uint8_t ****imageBuffer, int16_t **pNetResults, int input_width, int input_height) {
@@ -642,44 +628,72 @@ int main() {
     int16_t **pNetResultsTwoThird = myPnet(weightBuffer, imageBufferTwoThird, 48, 96);
     int16_t **pNetResultsHalf = myPnet(weightBuffer, imageBufferHalf, 36, 72);
 
-    //    ChangeCoordinatePnet(pNetResults, 1);
-//    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
-//    ChangeCoordinatePnet(pNetResultsHalf, 12);
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
+//    }
 
-//    pNetResults = BoundingBoxCheck(pNetResults, image_width, image_height);
-//    quickSortDesc(pNetResults, 0, pNetResults[0][7] - 1);
-//
-//    pNetResultsTwoThird = BoundingBoxCheck(pNetResultsTwoThird, image_width, image_height);
-//    quickSortDesc(pNetResultsTwoThird, 0, pNetResultsTwoThird[0][7] - 1);
-//
-//    pNetResultsHalf = BoundingBoxCheck(pNetResultsHalf, image_width, image_height);
-//    quickSortDesc(pNetResultsHalf, 0, pNetResultsHalf[0][7] - 1);
-//
-//    pNetResults = ReturnPnetTop32(pNetResults);
-//    pNetResultsTwoThird = ReturnPnetTop32(pNetResultsTwoThird);
-//    pNetResultsHalf = ReturnPnetTop32(pNetResultsHalf);
-//
-//    int16_t **pNetResultsFinal = (int16_t **)malloc(96 * sizeof(int16_t *));
-//    for(int i=0; i<32; i++){
-//        pNetResultsFinal[i] = pNetResults[i];
-//        pNetResultsFinal[i + 32] = pNetResultsTwoThird[i];
-//        pNetResultsFinal[i + 64] = pNetResultsHalf[i];
+    ChangeCoordinatePnet(pNetResults, 1);
+    ChangeCoordinatePnet(pNetResultsTwoThird, 23);
+    ChangeCoordinatePnet(pNetResultsHalf, 12);
+
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
-//
-//    for (int all=0;all<96; all++){
-//        pNetResultsFinal[all][5] = 0;
-//        pNetResultsFinal[all][4] = 0;
+
+    ThresholdCheck(pNetResults, 0);
+    ThresholdCheck(pNetResultsTwoThird, 0);
+    ThresholdCheck(pNetResultsHalf, 0);
+
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
-//
-//    for (int all=0;all<96; all++){
-//        if (pNetResultsFinal[all][2]<0 || pNetResultsFinal[all][3]<0){
-//            pNetResultsFinal[all][2] = 0;
-//            pNetResultsFinal[all][3] = 0;
-//            pNetResultsFinal[all][0] = 0;
-//            pNetResultsFinal[all][1] = 0;
-//        }
+
+    pNetResults = BoundingBoxCheck(pNetResults, image_width, image_height);
+    pNetResultsTwoThird = BoundingBoxCheck(pNetResultsTwoThird, image_width, image_height);
+    pNetResultsHalf = BoundingBoxCheck(pNetResultsHalf, image_width, image_height);
+
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
 //    }
-//
+
+    quickSortDesc(pNetResults, 0, pNetResults[0][7] - 1);
+    quickSortDesc(pNetResultsTwoThird, 0, pNetResultsTwoThird[0][7] - 1);
+    quickSortDesc(pNetResultsHalf, 0, pNetResultsHalf[0][7] - 1);
+
+//    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
+//    for(int i=0; i<2077; i++){
+//        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResults[i][0], pNetResults[i][1], pNetResults[i][2], pNetResults[i][3], pNetResults[i][4], pNetResults[i][5], pNetResults[i][6]);
+//    }
+
+    pNetResults = ReturnPnetTop32(pNetResults);
+    pNetResultsTwoThird = ReturnPnetTop32(pNetResultsTwoThird);
+    pNetResultsHalf = ReturnPnetTop32(pNetResultsHalf);
+
+    int16_t **pNetResultsFinal = (int16_t **)malloc(96 * sizeof(int16_t *));
+    for(int i=0; i<32; i++){
+        pNetResultsFinal[i] = pNetResults[i];
+        pNetResultsFinal[i + 32] = pNetResultsTwoThird[i];
+        pNetResultsFinal[i + 64] = pNetResultsHalf[i];
+    }
+
+    for (int all=0;all<96; all++){
+        pNetResultsFinal[all][5] = 0;
+        pNetResultsFinal[all][4] = 0;
+    }
+
+    for (int all=0;all<96; all++){
+        if (pNetResultsFinal[all][2]<0 || pNetResultsFinal[all][3]<0){
+            pNetResultsFinal[all][2] = 0;
+            pNetResultsFinal[all][3] = 0;
+            pNetResultsFinal[all][0] = 0;
+            pNetResultsFinal[all][1] = 0;
+        }
+    }
+
 //    printf("<<<<<<<<<<<<PNET RESULTS>>>>>>>>>>>>\n");
 //    for(int i=0; i<96; i++){
 //        printf("%d-> Score: %d, %d\t X, Y: %d, %d\tW, H: %d, %d\tindex: %d\n", i+1, pNetResultsFinal[i][0], pNetResultsFinal[i][1], pNetResultsFinal[i][2], pNetResultsFinal[i][3], pNetResultsFinal[i][4], pNetResultsFinal[i][5], pNetResultsFinal[i][6]);
